@@ -1,0 +1,94 @@
+﻿
+<div class="col-md-5">
+    <div class="row">
+        <h1 class="pageHeader">Forbrukslånet for deg som ønsker å låne inntil 500 000 kr med 7 % rente.</h1>
+    </div>
+</div>
+
+<!-- Lånesøknad -->
+<div class="col-md-4">
+    <form [formGroup]="loanForm" (ngSubmit)="onSubmit(loanForm.value)">
+        <div class="row form-style">
+
+            <!--Col 12-->
+            <div class="col-md-12">
+                <h1>Lånesøknad</h1>
+                <hr />
+            </div>
+
+            <!--Col 6-->
+            <div class="col-md-6">
+                <div class="form-group userInfo">
+                    <input type="text" class="form-control result" [formControl]="loanForm.controls['personalIdentification']" placeholder="Personnummer" maxlength="11" />
+                    <div class="alert alert-warning" *ngIf="loanForm.controls['personalIdentification'].hasError('required') && loanForm.controls['personalIdentification'].touched && !loanForm.controls['personalIdentification'].pristine">
+                        Personnummer er obligatorisk.
+                    </div>
+                    <div class="alert alert-warning" *ngIf="loanForm.controls['personalIdentification'].hasError('pattern') || loanForm.controls['personalIdentification'].hasError('maxlength') && loanForm.controls['personalIdentification'].touched && !loanForm.controls['personalIdentification'].pristine">
+                        Ugyldig personnummer (11 siffer).
+                    </div>
+                </div>
+            </div>
+
+            <!--Col 6-->
+            <div class="col-md-6">
+                <div class="form-group userInfo">
+                    <input type="text" class="form-control result" [formControl]="loanForm.controls['phonenumber']" placeholder="Telefonnummer" maxlength="8" />
+                    <div class="alert alert-warning" *ngIf="loanForm.controls['phonenumber'].hasError('required') && loanForm.controls['phonenumber'].touched && !loanForm.controls['phonenumber'].pristine">
+                        Telefonnummer er obligatorisk.
+                    </div>
+                    <div class="alert alert-warning" *ngIf="loanForm.controls['phonenumber'].hasError('pattern') || loanForm.controls['phonenumber'].hasError('maxLength') && loanForm.controls['phonenumber'].touched && !loanForm.controls['phonenumber'].pristine">
+                        Ugyldig telefonnummer (8 siffer).
+                    </div>
+                </div>
+            </div>
+
+            <!--Col 12-->
+            <div class="col-md-12">
+                <div class="form-group userInfo">
+                    <input type="text" class="form-control result" [formControl]="loanForm.controls['email']" placeholder="Epost" />
+                    <div class="alert alert-warning" *ngIf="loanForm.controls['email'].hasError('required') && loanForm.controls['email'].touched && !loanForm.controls['email'].pristine">
+                        Epost-adresse er obligatorisk.
+                    </div>
+                    <div class="alert alert-warning" *ngIf="loanForm.controls['email'].hasError('pattern') && loanForm.controls['email'].touched && !loanForm.controls['email'].pristine">
+                        Ugyldig epost-adresse.
+                    </div>
+                </div>
+            </div>
+
+            <!--Col 6-->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div><h2>Nedbetalingstid</h2></div>
+                    <input type="range" min="1" max="25" [(ngModel)]="duration" (change)="calculate()" formControlName="duration" class="input" />
+                    <div><h3>{{duration}} år</h3><hr /></div>
+                </div>
+            </div>
+
+            <!--Col 6-->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div><h2>Lånebeløp</h2></div>
+                    <input type="range" min="10000" max="500000" step="10000" [(ngModel)]="amount" (change)="calculate()" formControlName="amount" class="input" />
+                    <div><h3>{{amount}} kr</h3><hr /></div>
+                </div>
+            </div>
+
+            <!--Col 12-->
+            <div class="col-md-12">
+                <div class="form-group">
+                    <input type="text" value="Kr {{operation}} i måneden" class="form-control result" disabled />
+                </div>
+            </div>
+
+            <!--Col 12-->
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="submit" [disabled]="!loanForm.valid" class="btn btn-default">Søk forbrukslån</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="col-md-3"></div>
+
+

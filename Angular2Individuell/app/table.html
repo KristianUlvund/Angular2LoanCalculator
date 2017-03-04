@@ -1,0 +1,30 @@
+﻿<div class="container">
+    <button class="btn btn-primary" (click)="tableState()">{{btnText}}</button>
+    <div class="row table-responsive consumer-table" [@tableState]="state">
+        <div [class.loadingTable]="isLoading">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Personnummer</th>
+                        <th>Telefonnummer</th>
+                        <th>Email</th>
+                        <th>Lånebeløp</th>
+                        <th>Nedbetalingstid</th>
+                    </tr>
+                </thead>
+                <tbody [@tbodyState]="state">
+                    <tr *ngIf="isLoading">
+                        <td colspan="5">Data lastes inn..</td>
+                    </tr>
+                    <tr *ngFor="let consumer of consumers" class="trTransition {{consumer.state}}" (click)="trState(consumer)">
+                        <td>{{consumer.personalIdentification}}</td>
+                        <td>{{consumer.phonenumber}}</td>
+                        <td>{{consumer.email}}</td>
+                        <td>{{consumer.amount | currency: 'NOR':true}}</td>
+                        <td>{{consumer.duration}} år</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
